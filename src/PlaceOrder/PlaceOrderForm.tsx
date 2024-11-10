@@ -1,15 +1,15 @@
 import { observer } from "mobx-react";
 
-import { QuestionTooltip } from "shared/components/QuestionTooltip/QuestionTooltip";
 import { Button } from "shared/components/Button/Button";
 import { NumberInput } from "shared/components/NumberInput/NumberInput";
 
-import { BASE_CURRENCY, QUOTE_CURRENCY } from "./constants";
-import { useStore } from "./context";
 import { PlaceOrderTypeSwitch } from "./components/PlaceOrderTypeSwitch/PlaceOrderTypeSwitch";
 import { TakeProfit } from "./components/TakeProfit/TakeProfit";
+import { BASE_CURRENCY, QUOTE_CURRENCY } from "./constants";
+import { useStore } from "./context";
 
 import styles from "./PlaceOrderForm.module.scss";
+import { SectionTitle } from "./components/SectionTitle/SectionTitle";
 
 export const PlaceOrderForm = observer(() => {
   const {
@@ -25,10 +25,11 @@ export const PlaceOrderForm = observer(() => {
 
   return (
     <form className={styles.root}>
-      <div className={styles.label}>
-        Market direction{" "}
-        <QuestionTooltip message="Market direction description" />
-      </div>
+      <SectionTitle
+        title="Market direction"
+        tooltip="Market direction description"
+        className={styles.title}
+      />
       <div className={styles.content}>
         <div className={styles.typeSwitch}>
           <PlaceOrderTypeSwitch

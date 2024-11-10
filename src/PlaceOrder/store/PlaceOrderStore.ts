@@ -1,4 +1,4 @@
-import { observable, computed, action, makeObservable } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 
 import type { OrderSide } from "../model";
 
@@ -10,6 +10,8 @@ export class PlaceOrderStore {
   @observable activeOrderSide: OrderSide = "buy";
   @observable price = 0;
   @observable amount = 0;
+  @observable takeProfitExpanded = false;
+  @observable takeProfitTargets = [];
 
   @computed get total(): number {
     return this.price * this.amount;
@@ -33,5 +35,14 @@ export class PlaceOrderStore {
   @action
   public setTotal = (total: number) => {
     this.amount = this.price > 0 ? total / this.price : 0;
+  };
+
+  @action
+  public toggleTakeProfit = () => {
+    this.takeProfitExpanded = !this.takeProfitExpanded;
+  };
+
+  @action addTakeProfitTarget = () => {
+    // this.takeProfitTargets =
   };
 }

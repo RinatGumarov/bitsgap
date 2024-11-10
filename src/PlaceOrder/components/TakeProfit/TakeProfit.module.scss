@@ -1,2 +1,55 @@
 .root {
+  background-color: #2b273b;
+  color: #ffffff;
+  overflow: scroll;
+  padding: 0 10px;
+}
+
+.labelDisabled {
+  color: #a2a7b9;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.contentWrapper {
+  padding: 0;
+}
+
+.headerWrapper {
+  padding: 0;
+}
+
+.cell {
+  padding: 0;
+  color: #ffffff;
+  text-wrap: nowrap;
+}
+
+.tableHeader {
+  th {
+    border: none;
+  }
+}
+
+.tableContent {
+  tr:last-child td {
+    border: none;
+  }
+}
+
+.profitCell {
+  width: 20%;
+}
+
+.priceCell {
+  width: 50%;
+}
+
+.amountCell {
+  width: 30%;
 }
