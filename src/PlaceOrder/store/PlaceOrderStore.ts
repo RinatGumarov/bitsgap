@@ -1,4 +1,5 @@
-import { observable, computed, action, makeObservable } from "mobx";
+import Decimal from "decimal.js";
+import { action, computed, makeObservable, observable } from "mobx";
 
 import type { OrderSide } from "../model";
 
@@ -8,11 +9,11 @@ export class PlaceOrderStore {
   }
 
   @observable activeOrderSide: OrderSide = "buy";
-  @observable price = 0;
-  @observable amount = 0;
+  @observable price = new Decimal("0");
+  @observable amount = new Decimal("0");
 
-  @computed get total(): number {
-    return this.price * this.amount;
+  @computed get total(): Decimal {
+    return this.price.mul(this.amount);
   }
 
   @action
@@ -21,17 +22,20 @@ export class PlaceOrderStore {
   };
 
   @action
-  public setPrice = (price: number) => {
-    this.price = price;
+  public setPrice = (price: string | Decimal) => {
+    this.price = new Decimal(price);
   };
 
   @action
-  public setAmount = (amount: number) => {
-    this.amount = amount;
+  public setAmount = (amount: string | Decimal) => {
+    this.amount = new Decimal(amount);
   };
 
   @action
-  public setTotal = (total: number) => {
-    this.amount = this.price > 0 ? total / this.price : 0;
+  public setTotal = (total: string | Decimal) => {
+    const decimalTotal = new Decimal(total);
+    this.amount = this.price.gt("0")
+      ? decimalTotal.div(this.price)
+      : new Decimal("0");
   };
 }

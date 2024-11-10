@@ -1,17 +1,14 @@
-import * as R from "remeda";
-
 import {
   TextInput,
   TextInputProps,
 } from "shared/components/TextInput/TextInput";
-import { useNumberFormat } from "./useNumberFormat";
 
 type Props = Omit<TextInputProps, "onChange" | "value"> & {
-  value: number | null;
+  value: string | null;
   min?: number;
   max?: number;
   decimalScale?: number;
-  onChange?(value: number | null): void;
+  onChange?(value: string): void;
 };
 
 function NumberInput({
@@ -27,15 +24,14 @@ function NumberInput({
   InputProps,
   ...rest
 }: Props) {
-  const numberInput = R.omit(
-    useNumberFormat(
-      value,
-      { onChange, onBlur, onFocus, onMouseUp, onKeyUp },
-      { min, max, decimalScale },
-    ),
-    ["api"],
+  return (
+    <TextInput
+      {...rest}
+      value={value}
+      InputProps={{ ...InputProps }}
+      onChange={onChange}
+    />
   );
-  return <TextInput {...rest} InputProps={{ ...InputProps, ...numberInput }} />;
 }
 
 export { NumberInput };

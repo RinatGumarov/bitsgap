@@ -1,14 +1,15 @@
 import { observer } from "mobx-react";
 
-import { QuestionTooltip } from "shared/components/QuestionTooltip/QuestionTooltip";
 import { Button } from "shared/components/Button/Button";
 import { NumberInput } from "shared/components/NumberInput/NumberInput";
+import { QuestionTooltip } from "shared/components/QuestionTooltip/QuestionTooltip";
 
-import { BASE_CURRENCY, QUOTE_CURRENCY } from "./constants";
-import { useStore } from "./context";
 import { PlaceOrderTypeSwitch } from "./components/PlaceOrderTypeSwitch/PlaceOrderTypeSwitch";
 import { TakeProfit } from "./components/TakeProfit/TakeProfit";
+import { BASE_CURRENCY, QUOTE_CURRENCY } from "./constants";
+import { useStore } from "./context";
 
+import Decimal from "decimal.js";
 import styles from "./PlaceOrderForm.module.scss";
 
 export const PlaceOrderForm = observer(() => {
@@ -38,18 +39,18 @@ export const PlaceOrderForm = observer(() => {
         </div>
         <NumberInput
           label={`Price, ${QUOTE_CURRENCY}`}
-          value={price}
-          onChange={(value) => setPrice(Number(value))}
+          value={price.toString()}
+          onChange={(value) => setPrice(new Decimal(value || "0"))}
         />
         <NumberInput
-          value={amount}
+          value={amount.toString()}
           label={`Amount, ${BASE_CURRENCY}`}
-          onChange={(value) => setAmount(Number(value))}
+          onChange={(value) => setAmount(new Decimal(value || "0"))}
         />
         <NumberInput
-          value={total}
+          value={total.toString()}
           label={`Total, ${QUOTE_CURRENCY}`}
-          onChange={(value) => setTotal(Number(value))}
+          onChange={(value) => setTotal(new Decimal(value || "0"))}
         />
         <TakeProfit />
         <div className={styles.submit}>
