@@ -1,0 +1,15 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.removeButton {
+  padding: 0;
+  min-width: unset;
+}

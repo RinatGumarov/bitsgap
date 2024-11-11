@@ -1,8 +1,11 @@
 .root {
+  display: flex;
+  flex-direction: column;
   background-color: #2b273b;
   color: #ffffff;
   overflow: scroll;
   padding: 0 10px;
+  border-radius: 8px;
 }
 
 .labelDisabled {
@@ -17,7 +20,7 @@
 }
 
 .contentWrapper {
-  padding: 0;
+  padding: 0 0 10px 0;
 }
 
 .headerWrapper {
@@ -25,9 +28,17 @@
 }
 
 .cell {
+  height: 30px;
   padding: 0;
   color: #ffffff;
   text-wrap: nowrap;
+  font-size: 12px;
+
+  & input {
+    height: auto;
+    color: #ffffff;
+    font-size: 12px;
+  }
 }
 
 .tableHeader {
@@ -37,8 +48,10 @@
 }
 
 .tableContent {
-  tr:last-child td {
-    border: none;
+  tr td {
+    &:not(:last-child) {
+      padding-right: 10px;
+    }
   }
 }
 
@@ -51,5 +64,19 @@
 }
 
 .amountCell {
-  width: 30%;
+  width: 20%;
+}
+
+.addTargetButton {
+  margin-top: 8px;
+}
+
+.projectedProfitWrapper {
+  display: flex;
+  text-wrap: nowrap;
+  margin-top: 24px;
+  & > div {
+    flex-basis: 100%;
+    border-bottom: 1px dashed #818c99;
+  }
 }

@@ -1,10 +1,19 @@
 import { SvgIcon } from "@mui/material";
+import { MAX_TAKE_PROFIT_TARGETS } from "PlaceOrder/constants";
+import { useStore } from "PlaceOrder/context";
+import { observer } from "mobx-react";
+import { FC } from "react";
 import { TextButton } from "shared/components/TextButton/TextButton";
 
-export const AddTargetButton = () => {
-  // const
+interface Props {
+  className?: string;
+}
+
+export const AddTargetButton: FC<Props> = observer(({ className }) => {
+  const { addTakeProfitTarget, takeProfitTargets } = useStore();
+
   return (
-    <TextButton>
+    <TextButton className={className} onClick={addTakeProfitTarget}>
       <SvgIcon>
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g id="add_circle_24px">
@@ -16,7 +25,7 @@ export const AddTargetButton = () => {
           </g>
         </svg>
       </SvgIcon>
-      Add profit target ()
+      Add profit target {takeProfitTargets.length}/{MAX_TAKE_PROFIT_TARGETS}
     </TextButton>
   );
-};
+});

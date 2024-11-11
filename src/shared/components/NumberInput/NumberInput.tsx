@@ -31,9 +31,9 @@ function NumberInput({
     useNumberFormat(
       value,
       { onChange, onBlur, onFocus, onMouseUp, onKeyUp },
-      { min, max, decimalScale },
+      { min, max, decimalScale }
     ),
-    ["api"],
+    ["api"]
   );
   return <TextInput {...rest} InputProps={{ ...InputProps, ...numberInput }} />;
 }

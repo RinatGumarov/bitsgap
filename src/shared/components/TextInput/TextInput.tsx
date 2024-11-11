@@ -1,19 +1,19 @@
-import { useState, ReactNode, ChangeEvent, FocusEvent } from "react";
 import {
+  InputLabelProps as MUIInputLabelProps,
+  InputBaseProps as MUIInputProps,
   TextField,
   TextFieldProps,
-  InputBaseProps as MUIInputProps,
-  InputLabelProps as MUIInputLabelProps,
   TooltipProps,
 } from "@mui/material";
 import cn from "classnames";
+import { ChangeEvent, FocusEvent, ReactNode, useState } from "react";
 
 import { Tooltip } from "../Tooltip/Tooltip";
 import styles from "./TextInput.module.scss";
 
 type Props = Omit<
   TextFieldProps,
-  "variant" | "onChange" | "className" | "classes" | "error"
+  "onChange" | "className" | "classes" | "error"
 > & {
   error?: ReactNode;
   InputLabelProps?: Omit<
@@ -36,15 +36,19 @@ const TextInput = ({
   InputLabelProps,
   InputProps,
   errorPlacement = "top",
+  variant,
   ...rest
 }: Props) => {
-  const inputClasses: MUIInputProps["classes"] = {
-    root: cn(styles.inputWrapper, { [styles.error]: Boolean(error) }),
-    focused: cn(styles.inputWrapper, styles.focused),
-    adornedEnd: cn(styles.inputWrapper, styles.adornedEnd),
-    adornedStart: cn(styles.inputWrapper, styles.adornedStart),
-    input: styles.input,
-  };
+  const inputClasses: MUIInputProps["classes"] =
+    variant === "standard"
+      ? {}
+      : {
+          root: cn(styles.inputWrapper, { [styles.error]: Boolean(error) }),
+          focused: cn(styles.inputWrapper, styles.focused),
+          adornedEnd: cn(styles.inputWrapper, styles.adornedEnd),
+          adornedStart: cn(styles.inputWrapper, styles.adornedStart),
+          input: styles.input,
+        };
 
   const labelClasses: MUIInputLabelProps["classes"] = {
     root: styles.inputLabel,
@@ -61,7 +65,7 @@ const TextInput = ({
       <TextField
         {...rest}
         className={styles.root}
-        variant="filled"
+        variant={variant ?? "filled"}
         onChange={handleChange}
         InputLabelProps={{
           ...InputLabelProps,

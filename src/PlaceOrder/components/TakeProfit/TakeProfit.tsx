@@ -7,23 +7,37 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { MAX_TAKE_PROFIT_TARGETS } from "PlaceOrder/constants";
 import classNames from "classnames";
 import { observer } from "mobx-react";
 import { Switch } from "shared/components/Switch/Switch";
 import { useStore } from "../../context";
 import { AddTargetButton } from "../AddTargetButton/AddTargetButton";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
+
+import { InputCell } from "./InputCell/InputCell";
 import styles from "./TakeProfit.module.scss";
 
 const TakeProfit = observer(() => {
-  const { activeOrderSide, takeProfitExpanded, toggleTakeProfit } = useStore();
+  const {
+    activeOrderSide,
+    takeProfitExpanded,
+    toggleTakeProfit,
+    takeProfitTargets,
+    removeTakeProfitTarget,
+    projectedProfit,
+    setTakeProfitTargetProfit,
+    setTakeProfitTargetPrice,
+    setTakeProfitTargetAmount,
+  } = useStore();
+
+  console.log(takeProfitTargets);
 
   return (
     <Accordion
       className={styles.root}
       disableGutters
       expanded={takeProfitExpanded}
-      slotProps={{ transition: { unmountOnExit: true } }}
     >
       <AccordionSummary
         aria-controls="take-profit-content"
@@ -67,20 +81,71 @@ const TakeProfit = observer(() => {
               </TableRow>
             </TableHead>
             <TableBody className={styles.tableContent}>
-              <TableRow>
-                <TableCell className={styles.cell}>{"row.name"}</TableCell>
-                <TableCell className={styles.cell}>{"row.calories"}</TableCell>
-                <TableCell className={styles.cell}>{"row.calories"}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className={styles.cell}>{"row.name"}</TableCell>
-                <TableCell className={styles.cell}>{"row.calories"}</TableCell>
-                <TableCell className={styles.cell}>{"row.calories"}</TableCell>
-              </TableRow>
+              {takeProfitTargets.map((target, index) => {
+                return (
+                  <TableRow key={index}>
+                    <TableCell
+                      className={classNames(styles.profitCell, styles.cell)}
+                    >
+                      <InputCell
+                        initialValue={target.profit}
+                        onBlur={(e) =>
+                          setTakeProfitTargetProfit(
+                            index,
+                            parseFloat(e.target.value) || 0
+                          )
+                        }
+                        min={0}
+                        max={100}
+                        suffix="%"
+                      />
+                    </TableCell>
+                    <TableCell
+                      className={classNames(styles.priceCell, styles.cell)}
+                    >
+                      <InputCell
+                        initialValue={target.price}
+                        onBlur={(e) =>
+                          setTakeProfitTargetPrice(
+                            index,
+                            parseFloat(e.target.value) || 0
+                          )
+                        }
+                        min={0}
+                        suffix="USDT"
+                      />
+                    </TableCell>
+                    <TableCell
+                      className={classNames(styles.amountCell, styles.cell)}
+                    >
+                      <InputCell
+                        initialValue={target.amount}
+                        onBlur={(e) =>
+                          setTakeProfitTargetAmount(
+                            index,
+                            parseFloat(e.target.value) || 0
+                          )
+                        }
+                        min={0}
+                        max={100}
+                        suffix="%"
+                        removeHandler={() => removeTakeProfitTarget(index)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
-        <AddTargetButton />
+        {takeProfitTargets.length < MAX_TAKE_PROFIT_TARGETS && (
+          <AddTargetButton className={styles.addTargetButton} />
+        )}
+        <div className={styles.projectedProfitWrapper}>
+          Projected profit
+          <div />
+          {projectedProfit} USDT
+        </div>
       </AccordionDetails>
     </Accordion>
   );
