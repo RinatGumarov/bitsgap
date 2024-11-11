@@ -21,10 +21,17 @@ export const PlaceOrderForm = observer(() => {
     setAmount,
     setTotal,
     setOrderSide,
+    submitForm,
   } = useStore();
 
   return (
-    <form className={styles.root}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        submitForm();
+      }}
+      className={styles.root}
+    >
       <SectionTitle
         title="Market direction"
         tooltip="Market direction description"

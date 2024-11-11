@@ -10,6 +10,16 @@
 }
 
 .removeButton {
+  margin-left: 16px;
   padding: 0;
   min-width: unset;
+}
+
+.suffix {
+  color: #a2a7b9;
+}
+
+.error {
+  color: #f96c5a;
+  border-color: #f96c5a;
 }

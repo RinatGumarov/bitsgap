@@ -80,3 +80,16 @@
     border-bottom: 1px dashed #818c99;
   }
 }
+
+.validationError {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 12px;
+  margin-top: 8px;
+  color: #f96c5a;
+  font-size: 12px;
+  border-radius: 8px;
+  border: 1px solid #333545;
+}

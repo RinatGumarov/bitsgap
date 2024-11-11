@@ -1,4 +1,5 @@
 import { SvgIcon, TextField } from "@mui/material";
+import classNames from "classnames";
 import { FC, useEffect, useState } from "react";
 import { TextButton } from "shared/components/TextButton/TextButton";
 import styles from "./InputCell.module.css";
@@ -10,6 +11,7 @@ interface Props {
   removeHandler?: () => void;
   min?: number;
   max?: number;
+  error?: boolean;
 }
 
 export const InputCell: FC<Props> = ({
@@ -19,6 +21,7 @@ export const InputCell: FC<Props> = ({
   removeHandler,
   min = -Infinity,
   max = Infinity,
+  error,
 }) => {
   const [value, setValue] = useState(initialValue.toString());
   useEffect(() => {
@@ -37,7 +40,7 @@ export const InputCell: FC<Props> = ({
   };
 
   return (
-    <div className={styles.root}>
+    <div className={classNames(styles.root, error && styles.error)}>
       <TextField
         variant="standard"
         value={value}
@@ -45,7 +48,9 @@ export const InputCell: FC<Props> = ({
         onBlur={onBlur}
       />
       <div className={styles.inputWrapper}>
-        {!!suffix && <div>{suffix}</div>}
+        {!!suffix && (
+          <div className={classNames(!error && styles.suffix)}>{suffix}</div>
+        )}
       </div>
       {!!removeHandler && (
         <TextButton onClick={removeHandler} className={styles.removeButton}>

@@ -120,6 +120,11 @@ export class PlaceOrderStore {
     this.takeProfitTargets.splice(index, 1);
   };
 
+  @action
+  public submitForm = () => {
+    this.validate();
+  };
+
   private updateAmountSum = () => {
     const sumAmount = this.sumTakeProfitAmount;
     if (sumAmount > 100) {
@@ -191,15 +196,15 @@ export class PlaceOrderStore {
       0
     );
     if (sumAmount > 100) {
-      this.validationError = `${sumAmount} out of 100% selected. Please decrease by ${
+      this.validationError = `${sumAmount}% out of 100% selected. Please decrease by ${
         sumAmount - 100
-      }`;
+      }%`;
       return;
     }
     if (sumAmount < 100) {
-      this.validationError = `${sumAmount} out of 100% selected. Please increase by ${
+      this.validationError = `${sumAmount}% out of 100% selected. Please increase by ${
         100 - sumAmount
-      }`;
+      }%`;
       return;
     }
   };

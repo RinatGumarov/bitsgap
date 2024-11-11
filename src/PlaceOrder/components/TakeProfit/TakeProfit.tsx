@@ -29,6 +29,7 @@ const TakeProfit = observer(() => {
     setTakeProfitTargetProfit,
     setTakeProfitTargetPrice,
     setTakeProfitTargetAmount,
+    validationError,
   } = useStore();
 
   console.log(takeProfitTargets);
@@ -138,6 +139,9 @@ const TakeProfit = observer(() => {
             </TableBody>
           </Table>
         </TableContainer>
+        {!!validationError && (
+          <div className={styles.validationError}>{validationError}</div>
+        )}
         {takeProfitTargets.length < MAX_TAKE_PROFIT_TARGETS && (
           <AddTargetButton className={styles.addTargetButton} />
         )}
